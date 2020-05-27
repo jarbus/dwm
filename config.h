@@ -41,11 +41,14 @@ static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] 
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 
+#include "fibonacci.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
+  { "(@)",      spiral },
+	{ "[\\]",     dwindle },
 };
 
 #include <X11/XF86keysym.h>
@@ -63,7 +66,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "i3-dmenu-desktop", NULL}; //, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "dmenu_run","-m",dmenumon, NULL}; //, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 //static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, NULL}; //, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
 
@@ -104,19 +107,23 @@ static Key keys[] = {
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_c,      quit,           {0} },
   // custom commands
-	{ MODKEY|ShiftMask,             XK_m,      spawn,          SHCMD("xrandr --auto") },
+	{ MODKEY|ShiftMask,             XK_m,      spawn,          SHCMD("$HOME/.scripts/automonitor.sh") },
 	{ MODKEY,                       XK_p,      spawn,          SHCMD("$HOME/.scripts/lpass.sh") },
+	{ MODKEY,                       XK_e,      spawn,          SHCMD("dmenuunicode -1") },
 	{ MODKEY,                       XK_F12,    spawn,          SHCMD("light -A 5") },
 	{ MODKEY,                       XK_F11,    spawn,          SHCMD("light -U 5") },
 	{ MODKEY|ShiftMask,             XK_F11,    spawn,          SHCMD("light -S 0.1") },
 	{ MODKEY,                       XK_x,      spawn,          SHCMD("systemctl suspend") },
 	{ MODKEY,                       XK_c,      spawn,          SHCMD("gnome-screenshot -ic") },
 	{ MODKEY,                       XK_c,      spawn,          SHCMD("gnome-screenshot -ic") },
-	{ MODKEY,                       XK_equal,      spawn,          SHCMD("pulseaudio-ctl up") },
-	{ MODKEY,                       XK_minus,      spawn,          SHCMD("pulseaudio-ctl down") },
-  { 0, XF86XK_AudioMute,		spawn,		SHCMD("pulseaudio-ctl mute") },
+	{ MODKEY,                       XK_equal,  spawn,          SHCMD("pulseaudio-ctl up") },
+	{ MODKEY,                       XK_minus,  spawn,          SHCMD("pulseaudio-ctl down") },
+  { 0, XF86XK_AudioMute,     		spawn,		SHCMD("pulseaudio-ctl mute") },
 	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pulseaudio-ctl up") },
 	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pulseaudio-ctl down") },
+
+	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[3]} },
+	{ MODKEY|ShiftMask,             XK_r,      setlayout,      {.v = &layouts[4]} },
 
 
 	{ MODKEY,                       XK_a,      spawn,          SHCMD("audioswitch") }
