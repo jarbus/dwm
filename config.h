@@ -66,7 +66,8 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run","-m",dmenumon, NULL}; //, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+//static const char *dmenucmd[] = { "dmenu_run","-m",dmenumon, NULL}; //, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "j4-dmenu-desktop", NULL}; //, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 //static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, NULL}; //, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
 
@@ -109,24 +110,25 @@ static Key keys[] = {
   // custom commands
 	{ MODKEY|ShiftMask,             XK_m,      spawn,          SHCMD("$HOME/.scripts/automonitor.sh") },
 	{ MODKEY,                       XK_p,      spawn,          SHCMD("$HOME/.scripts/lpass.sh") },
+	{ MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("zathura $(find /home/jack/drive/papers | dmenu -l 20 -F)") },
 	{ MODKEY,                       XK_e,      spawn,          SHCMD("dmenuunicode -1") },
-	{ MODKEY,                       XK_F12,    spawn,          SHCMD("light -A 5") },
-	{ MODKEY,                       XK_F11,    spawn,          SHCMD("light -U 5") },
-	{ MODKEY|ShiftMask,             XK_F11,    spawn,          SHCMD("light -S 0.1") },
+	{ MODKEY,                       XK_F12,    spawn,          SHCMD("light -A 5;kill -45 $(pidof dwmblocks)")},
+	{ MODKEY,                       XK_F11,    spawn,          SHCMD("light -U 5;kill -45 $(pidof dwmblocks)") },
+	{ MODKEY|ShiftMask,             XK_F11,    spawn,          SHCMD("light -S 0.1;kill -45 $(pidof dwmblocks)") },
 	{ MODKEY,                       XK_x,      spawn,          SHCMD("systemctl suspend") },
 	{ MODKEY,                       XK_c,      spawn,          SHCMD("gnome-screenshot -ic") },
 	{ MODKEY,                       XK_c,      spawn,          SHCMD("gnome-screenshot -ic") },
-	{ MODKEY,                       XK_equal,  spawn,          SHCMD("pulseaudio-ctl up") },
-	{ MODKEY,                       XK_minus,  spawn,          SHCMD("pulseaudio-ctl down") },
-  { 0, XF86XK_AudioMute,     		spawn,		SHCMD("pulseaudio-ctl mute") },
-	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pulseaudio-ctl up") },
-	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pulseaudio-ctl down") },
+	{ MODKEY,                       XK_equal,  spawn,          SHCMD("pulseaudio-ctl up; kill -44 $(pidof dwmblocks)") },
+	{ MODKEY,                       XK_minus,  spawn,          SHCMD("pulseaudio-ctl down; kill -44 $(pidof dwmblocks)") },
+  { 0, XF86XK_AudioMute,     		spawn,		SHCMD("pulseaudio-ctl mute; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pulseaudio-ctl up; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pulseaudio-ctl down; kill -44 $(pidof dwmblocks)") },
 
 	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY|ShiftMask,             XK_r,      setlayout,      {.v = &layouts[4]} },
 
 
-	{ MODKEY,                       XK_a,      spawn,          SHCMD("audioswitch") }
+	{ MODKEY,                       XK_a,      spawn,          SHCMD("audioswitch;kill -44 $(pidof dwmblocks)") }
 
 };
 
