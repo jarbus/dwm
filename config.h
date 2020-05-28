@@ -10,6 +10,12 @@ static const int systrayspacing        = 2;
 static const int systraypinning        = 1;
 static const int systraypinningfailfirst        = 1;
 
+static const unsigned int gappih    = 10;       /* horiz inner gap between windows */
+static const unsigned int gappiv    = 10;       /* vert inner gap between windows */
+static const unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 10;       /* vert outer gap between windows and screen edge */
+static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
+
 static const char *fonts[]          = { "monospace:size=18" };
 static const char dmenufont[]       = "monospace:size=15";
 static const char col_gray1[]       = "#222222";
@@ -126,6 +132,9 @@ static Key keys[] = {
 
 	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY|ShiftMask,             XK_r,      setlayout,      {.v = &layouts[4]} },
+	{ MODKEY,                       XK_s,      incrgaps,       {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_s,      incrgaps,       {.i = -1 } },
+	{ MODKEY,                       XK_g,      togglegaps,     {0} },
 
 
 	{ MODKEY,                       XK_a,      spawn,          SHCMD("audioswitch;kill -44 $(pidof dwmblocks)") }
