@@ -17,13 +17,13 @@ static const unsigned int gappoh    = 10;       /* horiz outer gap between windo
 static const unsigned int gappov    = 10;       /* vert outer gap between windows and screen edge */
 static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 
-static const char *fonts[]          = { "monospace:size=18" };
-static const char dmenufont[]       = "monospace:size=15";
-static const char col_gray1[]       = "#070B11";
+static const char *fonts[]          = { "JetBrainsMono:size=18" };
+static const char dmenufont[]       = "JetBrainsMono:size=15";
+static const char col_gray1[]       = "#282828";
 static const char col_gray2[]       = "#070B11";
 static const char col_gray3[]       = "#9099a2";
-static const char col_gray4[]       = "#cfdbe8";
-static const char col_cyan[]        = "#3A5B8A";
+static const char col_gray4[]       = "#fbf1c7";
+static const char col_cyan[]        = "#458588";
 //static const char col_cyan[]        = "#005577";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
@@ -125,7 +125,7 @@ static Key keys[] = {
 	//{ MODKEY|ShiftMask,             XK_c,      quit,           {0} },
   // custom commands
 	{ MODKEY|ShiftMask,             XK_m,      spawn,          SHCMD("automonitor") },
-	{ MODKEY,                       XK_p,      spawn,          SHCMD("qbp") },
+	{ MODKEY,                       XK_p,      spawn,          SHCMD("passmenu") },
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("papers") },
 	{ MODKEY,                       XK_e,      spawn,          SHCMD("dmenuunicode -1") },
 	{ MODKEY,                       XK_F12,    spawn,          SHCMD("light -A 5;kill -45 $(pidof dwmblocks)")},
