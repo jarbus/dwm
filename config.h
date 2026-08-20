@@ -28,6 +28,7 @@ static const char col_gray2[] = "#0a0a0c";
 static const char col_gray3[] = "#e8e8e4";
 static const char col_gray4[] = "#020203";
 static const char col_cyan[] = "#d8f0d8";
+
 // static const char col_cyan[]        = "#005577";
 static const char *colors[][3] = {
     /*               fg         bg         border   */
@@ -69,6 +70,8 @@ static const Layout layouts[] = {
     {"[]=", tile}, /* first entry is default */
     {"><>", NULL}, /* no layout function means floating behavior */
     {"[M]", monocle}, {"(@)", spiral}, {"[\\]", dwindle},
+	{ "TTT",      bstack },
+	{ "===",      bstackhoriz },
 };
 
 #include <X11/XF86keysym.h>
@@ -110,7 +113,7 @@ static Key keys[] = {
     {MODKEY, XK_d, spawn, {.v = dmenucmd}},
     {MODKEY | ShiftMask, XK_Return, spawn, {.v = termcmd}},
     {MODKEY | ShiftMask, XK_d, spawn, SHCMD("dicclip")},
-    {MODKEY, XK_q, spawn, SHCMD("qutebrowser")},
+    {MODKEY, XK_q, spawn, SHCMD("firefox")},
     {MODKEY, XK_b, togglebar, {0}},
     {MODKEY, XK_j, focusstack, {.i = +1}},
     {MODKEY, XK_k, focusstack, {.i = -1}},
@@ -119,14 +122,16 @@ static Key keys[] = {
     //{MODKEY, XK_o, incnmaster, {.i = -1}},
     {MODKEY, XK_h, setmfact, {.f = -0.05}},
     {MODKEY, XK_l, setmfact, {.f = +0.05}},
+    {MODKEY | ShiftMask, XK_l, spawn, SHCMD("/home/jack/bin/sellmect")},
     {MODKEY, XK_Return, zoom, {0}},
     {MODKEY, XK_Tab, view, {0}},
     {MODKEY | ShiftMask, XK_q, killclient, {0}},
     {MODKEY, XK_v, spawn, SHCMD("open-selection-in-vim")},
-    {MODKEY, XK_t, spawn, SHCMD("en2es")},
-    {MODKEY | ShiftMask, XK_t, spawn, SHCMD("es2en")},
+    {MODKEY, XK_t, setlayout, {.v = &layouts[0]}},
     {MODKEY, XK_f, setlayout, {.v = &layouts[1]}},
     {MODKEY, XK_m, setlayout, {.v = &layouts[2]}},
+	{ MODKEY,  XK_u,      setlayout,      {.v = &layouts[5]} },
+	{ MODKEY,  XK_o,      setlayout,      {.v = &layouts[6]} },
     {MODKEY, XK_space, setlayout, {0}},
     {MODKEY | ShiftMask, XK_space, togglefloating, {0}},
     {MODKEY, XK_0, view, {.ui = ~0}},
@@ -144,23 +149,23 @@ static Key keys[] = {
     {MODKEY, XK_p, spawn, SHCMD("passmenu")},
     {MODKEY | ShiftMask, XK_p, spawn, SHCMD("papers")},
     {MODKEY, XK_e, spawn, SHCMD("dmenuunicode -1")},
-    {0, XK_F9, spawn,
-     SHCMD("brightnessctl set +5% ;kill -45 $(pidof dwmblocks)")},
     {0, XK_F8, spawn,
+     SHCMD("brightnessctl set +5% ;kill -45 $(pidof dwmblocks)")},
+    {0, XK_F7, spawn,
      SHCMD("brightnessctl set 5%- ;kill -45 $(pidof dwmblocks)")},
     {MODKEY, XK_x, spawn, SHCMD("systemctl suspend")},
     {MODKEY, XK_c, spawn, SHCMD("gnome-screenshot -ic")},
     {MODKEY, XK_equal, spawn,
-     SHCMD("pulseaudio-ctl up; kill -44 $(pidof dwmblocks)")},
+     SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%; kill -44 $(pidof dwmblocks)")},
     {MODKEY, XK_minus, spawn,
-     SHCMD("pulseaudio-ctl down; kill -44 $(pidof dwmblocks)")},
+     SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%; kill -44 $(pidof dwmblocks)")},
     {0, XF86XK_AudioMute, spawn,
-     SHCMD("pulseaudio-ctl mute; kill -44 $(pidof dwmblocks)")},
+     SHCMD("pactl set-sink-volume @DEFAULT_SINK@ 0; kill -44 $(pidof dwmblocks)")},
 
     {0, XF86XK_AudioRaiseVolume, spawn,
-     SHCMD("pulseaudio-ctl up; kill -44 $(pidof dwmblocks)")},
+     SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%; kill -44 $(pidof dwmblocks)")},
     {0, XF86XK_AudioLowerVolume, spawn,
-     SHCMD("pulseaudio-ctl down; kill -44 $(pidof dwmblocks)")},
+     SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%; kill -44 $(pidof dwmblocks)")},
 
     {MODKEY, XK_r, setlayout, {.v = &layouts[3]}},
     {MODKEY | ShiftMask, XK_r, setlayout, {.v = &layouts[4]}},
