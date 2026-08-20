@@ -23,11 +23,11 @@ static const int smartgaps =
 
 static const char *fonts[] = {"Unifont:size=24"};
 static const char dmenufont[] = "Unifont:size=20";
-static const char col_gray1[] = "#000000";
-static const char col_gray2[] = "#070B11";
-static const char col_gray3[] = "#9099a2";
-static const char col_gray4[] = "#ffffff";
-static const char col_cyan[] = "#5f8787";
+static const char col_gray1[] = "#020203";
+static const char col_gray2[] = "#0a0a0c";
+static const char col_gray3[] = "#e8e8e4";
+static const char col_gray4[] = "#020203";
+static const char col_cyan[] = "#d8f0d8";
 // static const char col_cyan[]        = "#005577";
 static const char *colors[][3] = {
     /*               fg         bg         border   */
